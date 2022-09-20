@@ -1,22 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-web';
 import Header from './components/Header';
+import Input from './components/Input';
 
 
 export default function App() {
+  const onTextAdd = function (newText) {
+    console.log(newText)
+  }
   const name = "Mobile Dev";
-  const [text, setText] = useState("");
+  // const [text, setText] = useState("");
   return (
     <View style={styles.container}>
       <Header appName = {name}/>
-      <Text>Input text: {text} </Text>
-      <TextInput 
-        value = {text}
-        onChangeText={(newText) => {setText(newText)}}
-        placeholder="Please text here: "
-        />
+      <Input onAdd = {onTextAdd}/>
       {/* <StatusBar style="auto" /> */}
     </View>
   );
