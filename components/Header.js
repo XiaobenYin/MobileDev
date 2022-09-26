@@ -1,11 +1,21 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 
 export default function Header({appName}) {
   
   return (
     <View>
-      <Text>Open up App.js {appName}</Text>
+      <Text style={styles.border}>Open up App.js {appName}</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  border: {
+    color: "purple",
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
