@@ -6,57 +6,63 @@ import {
   Modal,
   StyleSheet,
   Image,
+  SafeAreaView,
 } from "react-native";
 import { useState } from "react";
 
 export default function Input({ onAdd, modal, onCancel }) {
-  const [text, setText] = useState();
+  const [text, setText] = useState('');
 
   return (
-    <Modal visible={modal}>
-      <View style={styles.container}>
-        <Image
-          source={{
-            uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
-          }}
-          style={styles.image}
-        />
-        {/* <Text>Isnput text: {text} </Text> */}
-        <TextInput
-          style={styles.input}
-          value={text}
-          onChangeText={(newText) => {
-            setText(newText);
-          }}
-          placeholder="Please text here: "
-        />
-        <View style={styles.button}>
-        <Button
 
-          title="Enter"
-          onPress={() => {
-            onAdd(text);
-            setText = "";
-          }}
-        />
+      <Modal visible={modal} statusBarTranslucent={true}>
+        <View style={styles.container}>
+          <Image
+            source={{
+              uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
+            }}
+            style={styles.image}
+          />
+          {/* <Text>Isnput text: {text} </Text> */}
+          <TextInput
+            style={styles.input}
+            value={text}
+            onChangeText={(newText) => {
+              setText(newText);
+            }}
+            placeholder="Please text here: "
+          />
+          <View style={styles.buttonsContainer}>
+            <View style={styles.button}>
+              <Button
+                title="Cancel"
+                onPress={() => {
+                  onCancel();
+                }}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                title="Enter"
+                onPress={() => {
+                  onAdd(text);
+                  setText = "";
+                }}
+                disabled={text.length==0? true : false}
+              />
+            </View>
+          </View>
         </View>
-        <View style={styles.button}>
-        <Button
-          title="Cancel"
-          onPress={() => {
-            onCancel();
-          }}
-        />
-        </View>
-      </View>
-    </Modal>
+      </Modal>
+
   );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#aaa",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -67,9 +73,13 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 5,
+    width: "30%",
   },
   image: {
     width: 100,
     height: 100,
-  }
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
 });
