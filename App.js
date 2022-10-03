@@ -15,7 +15,11 @@ export default function App() {
   };
 
   const onTextAdd = function (newText) {
-    console.log(newText);
+    const newGoal = { text: newText, key: Math.random() };
+    setGoals((goals) => {
+      return [...goals, newGoal];
+    });
+    console.log(goals);
     setModalVisible(false);
   };
   const name = "Mobile Dev";
