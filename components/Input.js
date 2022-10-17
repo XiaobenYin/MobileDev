@@ -11,55 +11,51 @@ import {
 import { useState } from "react";
 
 export default function Input({ onAdd, modal, onCancel }) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
   return (
-
-      <Modal visible={modal} statusBarTranslucent={true}>
-        <View style={styles.container}>
-          <Image
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
-            }}
-            style={styles.image}
-          />
-          {/* <Text>Isnput text: {text} </Text> */}
-          <TextInput
-            style={styles.input}
-            value={text}
-            onChangeText={(newText) => {
-              setText(newText);
-            }}
-            placeholder="Please text here: "
-          />
-          <View style={styles.buttonsContainer}>
-            <View style={styles.button}>
-              <Button
-                title="Cancel"
-                onPress={() => {
-                  onCancel();
-                }}
-              />
-            </View>
-            <View style={styles.button}>
-              <Button
-                title="Enter"
-                onPress={() => {
-                  onAdd(text);
-                  setText = "";
-                }}
-                disabled={text.length==0? true : false}
-              />
-            </View>
+    <Modal visible={modal} statusBarTranslucent={true}>
+      <View style={styles.container}>
+        <Image
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
+          }}
+          style={styles.image}
+        />
+        {/* <Text>Isnput text: {text} </Text> */}
+        <TextInput
+          style={styles.input}
+          value={text}
+          onChangeText={(newText) => {
+            setText(newText);
+          }}
+          placeholder="Please text here: "
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.button}>
+            <Button
+              title="Cancel"
+              onPress={() => {
+                onCancel();
+              }}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Enter"
+              onPress={() => {
+                onAdd(text);
+              }}
+              disabled={text.length == 0 ? true : false}
+            />
           </View>
         </View>
-      </Modal>
-
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: "#aaa",

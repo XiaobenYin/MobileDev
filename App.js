@@ -1,11 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
-import { TextInput } from "react-native-web";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
+import { ScrollView, TextInput } from "react-native";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import { useState } from "react";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
+  const [goals, setGoals] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const makeModalVisible = () => {
     setModalVisible(true);
@@ -16,15 +25,22 @@ export default function App() {
 
   const onTextAdd = function (newText) {
     const newGoal = { text: newText, key: Math.random() };
-    setGoals((goals) => {
-      return [...goals, newGoal];
+    setGoals((prevgoals) => {
+      return [...prevgoals, newGoal];
     });
-    console.log(goals);
     setModalVisible(false);
   };
   const name = "Mobile Dev";
 
-  // const [text, setText] = useState("");
+  function onDelete(deletedKey) {
+    setGoals(
+      goals.filter((goal) => {
+        console.log(deletedKey);
+        return goal.key !== deletedKey;
+      })
+    );
+    console.log(goals);
+  }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -32,16 +48,20 @@ export default function App() {
         <Button title="Add a Goal" onPress={makeModalVisible} />
       </View>
       <View style={styles.bottomContainer}>
-        <Text style={styles.textContainer}>
-          <Text style={styles.text}>You Typed..</Text>
-        </Text>
+        <FlatList
+          data={goals}
+          renderItem={({ item }) => {
+            console.log(item);
+            return <GoalItem goal={item} onDelete={onDelete} />;
+          }}
+          contentContainerStyle={styles.scrollViewItems}
+        ></FlatList>
       </View>
       <Input
         modal={modalVisible}
         onAdd={onTextAdd}
         onCancel={makeModalInvisible}
       />
-      {/* <StatusBar style="auto" /> */}
     </SafeAreaView>
   );
 }
@@ -61,14 +81,16 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 4,
     backgroundColor: "pink",
+  },
+  scrollViewItems: {
     alignItems: "center",
   },
   textContainer: {
     backgroundColor: "#aaa",
     borderRadius: 5,
     color: "blue",
+    padding: 30,
+    margin: 30,
   },
-  text: {
-    color: "green",
-  },
+  text: { fontSize: 12 },
 });
