@@ -1,26 +1,26 @@
-import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import React from "react";
 
-export default function GoalItem({ goal, onDelete }) {
+import DeleteButton from "./DeleteButton";
+
+export default function GoalItem({ goal, onDelete, onItemPress }) {
+  function deletePressed() {
+    onDelete(goal.key);
+  }
   return (
     <View style={styles.goalTextContainer}>
-      <Text style={styles.goalText}> {goal.text} </Text>
-      <View style={styles.button}>
-        <Button
-          title="X"
-          onPress={() => onDelete(goal.key)}
-          color="#444"
-        ></Button>
-      </View>
+      <Pressable
+        onPress={onItemPress}
+        android_ripple={{ color: "#223355", foreground: true }}
+        style={(obj) => {
+          return obj.pressed && styles.pressedItem;
+          //  style={({pressed}) => {
+          //   return pressed && styles.pressedItem;
+        }}
+      >
+        <Text style={styles.goalText}> {goal.text} </Text>
+      </Pressable>
+      <DeleteButton onDeletePressed={deletePressed} />
     </View>
   );
 }
@@ -41,4 +41,9 @@ const styles = StyleSheet.create({
     // backgroundColor:'#aaa',
     padding: 8,
   },
+  pressedItem: {
+    backgroundColor: "#222",
+    opacity: 0.5,
+  },
 });
+
