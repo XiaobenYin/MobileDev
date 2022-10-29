@@ -10,8 +10,12 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
+import DeleteButton from "./DeleteButton";
 
 export default function GoalItem({ goal, onDelete, onItemPress }) {
+  function deletePressed() {
+    onDelete(goal.key);
+  }
   return (
     <Pressable
       onPress={onItemPress}
@@ -23,11 +27,12 @@ export default function GoalItem({ goal, onDelete, onItemPress }) {
       <View style={styles.goalTextContainer}>
         <Text style={styles.goalText}> {goal.text} </Text>
         <View style={styles.button}>
-          <Button
+          {/* <Button
             title="X"
             onPress={() => onDelete(goal.key)}
             color="#444"
-          ></Button>
+          ></Button> */}
+          <DeleteButton onButtonPressed={deletePressed}/>
         </View>
       </View>
     </Pressable>
@@ -38,6 +43,7 @@ const styles = StyleSheet.create({
   goalTextContainer: {
     margin: 8,
     borderRadius: 5,
+    padding: 5,
     backgroundColor: "#aaa",
     flexDirection: "row",
     justifyContent: "space-evenly",

@@ -33,14 +33,16 @@ export default function App() {
     setModalVisible(false);
   };
 
-  function onDelete(deletedKey)
-  {
-    console.log('delete pressed ', deletedKey)
-   setGoals( goals.filter((goal)=>{ return goal.key != deletedKey}))
+  function onDelete(deletedKey) {
+    console.log("delete pressed ", deletedKey);
+    setGoals(
+      goals.filter((goal) => {
+        return goal.key != deletedKey;
+      })
+    );
   }
-  function itemPressed()
-  {
-    console.log("item pressed")
+  function itemPressed() {
+    console.log("item pressed");
   }
 
   const name = "my App";
@@ -51,13 +53,19 @@ export default function App() {
         <Button title="Add a Goal" onPress={makeModalVisible} />
       </View>
       <View style={styles.bottomContainer}>
-        <FlatList data={goals} 
-        renderItem={({item})=>{ 
-           return( 
-            <GoalItem goal={item} onDelete={onDelete} onItemPress={itemPressed}/>
-              )}}
-          contentContainerStyle={styles.scrollViewItems}>
-        </FlatList>
+        <FlatList
+          data={goals}
+          renderItem={({ item }) => {
+            return (
+              <GoalItem
+                goal={item}
+                onDelete={onDelete}
+                onItemPress={itemPressed}
+              />
+            );
+          }}
+          contentContainerStyle={styles.scrollViewItems}
+        ></FlatList>
       </View>
       <Input
         modal={modalVisible}
