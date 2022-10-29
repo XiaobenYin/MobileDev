@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import { ScrollView, TextInput } from "react-native";
 import Header from "./components/Header";
 import Input from "./components/Input";
 import { useState } from "react";
@@ -15,7 +14,18 @@ import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [goals, setGoals] = useState([]);
+  // goals =[{text:'learn', key:random_number}]
+
   const [modalVisible, setModalVisible] = useState(false);
+  const onTextAdd = function (newText) {
+    // update this function to receive newText and adds an object
+    //with properties text and key to goals array
+    const newGoal = { text: newText, key: Math.random() };
+    setGoals((prevgoals) => {
+      return [...prevgoals, newGoal];
+    });
+    setModalVisible(false);
+  };
   const makeModalVisible = () => {
     setModalVisible(true);
   };
@@ -23,24 +33,17 @@ export default function App() {
     setModalVisible(false);
   };
 
-  const onTextAdd = function (newText) {
-    const newGoal = { text: newText, key: Math.random() };
-    setGoals((prevgoals) => {
-      return [...prevgoals, newGoal];
-    });
-    setModalVisible(false);
-  };
-  const name = "Mobile Dev";
-
-  function onDelete(deletedKey) {
-    setGoals(
-      goals.filter((goal) => {
-        console.log(deletedKey);
-        return goal.key !== deletedKey;
-      })
-    );
-    console.log(goals);
+  function onDelete(deletedKey)
+  {
+    console.log('delete pressed ', deletedKey)
+   setGoals( goals.filter((goal)=>{ return goal.key != deletedKey}))
   }
+  function itemPressed()
+  {
+    console.log("item pressed")
+  }
+
+  const name = "my App";
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -48,20 +51,20 @@ export default function App() {
         <Button title="Add a Goal" onPress={makeModalVisible} />
       </View>
       <View style={styles.bottomContainer}>
-        <FlatList
-          data={goals}
-          renderItem={({ item }) => {
-            console.log(item);
-            return <GoalItem goal={item} onDelete={onDelete} />;
-          }}
-          contentContainerStyle={styles.scrollViewItems}
-        ></FlatList>
+        <FlatList data={goals} 
+        renderItem={({item})=>{ 
+           return( 
+            <GoalItem goal={item} onDelete={onDelete} onItemPress={itemPressed}/>
+              )}}
+          contentContainerStyle={styles.scrollViewItems}>
+        </FlatList>
       </View>
       <Input
         modal={modalVisible}
-        onAdd={onTextAdd}
         onCancel={makeModalInvisible}
+        onAdd={onTextAdd}
       />
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }

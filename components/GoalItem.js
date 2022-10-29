@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   StyleSheet,
@@ -10,18 +11,26 @@ import {
   FlatList,
 } from "react-native";
 
-export default function GoalItem({ goal, onDelete }) {
+export default function GoalItem({ goal, onDelete, onItemPress }) {
   return (
-    <View style={styles.goalTextContainer}>
-      <Text style={styles.goalText}> {goal.text} </Text>
-      <View style={styles.button}>
-        <Button
-          title="X"
-          onPress={() => onDelete(goal.key)}
-          color="#444"
-        ></Button>
+    <Pressable
+      onPress={onItemPress}
+      android_ripple={{ color: "#223355", foreground: true }}
+      style={({pressed}) => {
+        return pressed && styles.pressed;
+      }}
+    >
+      <View style={styles.goalTextContainer}>
+        <Text style={styles.goalText}> {goal.text} </Text>
+        <View style={styles.button}>
+          <Button
+            title="X"
+            onPress={() => onDelete(goal.key)}
+            color="#444"
+          ></Button>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -40,5 +49,9 @@ const styles = StyleSheet.create({
     color: "#929",
     // backgroundColor:'#aaa',
     padding: 8,
+  },
+  pressed: {
+    backgroundColor: "#222",
+    opacity: 0.5,
   },
 });
