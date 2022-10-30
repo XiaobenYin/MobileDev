@@ -35,7 +35,7 @@ export default function Home({navigation}) {
 
   function itemPressed(goal) {
     console.log("item pressed");
-    navigation.navigate('Details', {goalObject:goal});
+    navigation.navigate('GoalDetails', {goalObject:goal});
   }
 
   return (
