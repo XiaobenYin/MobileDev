@@ -21,7 +21,11 @@ export default function App() {
           component={Home}
           options={{ title: "All My Goals " }}
         />
-        <Stack.Screen name="GoalDetails" component={GoalDetails} />
+        <Stack.Screen
+          name="GoalDetails"
+          component={GoalDetails}
+          options={({ route }) => ({ title: route.params.goalObject.text })}
+        />
       </Stack.Navigator>
       {/* <Home /> */}
     </NavigationContainer>
