@@ -1,19 +1,10 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
-import { ScrollView, TextInput } from "react-native";
+import { StyleSheet, View, Button, SafeAreaView, FlatList } from "react-native";
 import Header from "./Header";
 import Input from "./Input";
 import { useState } from "react";
 import GoalItem from "./GoalItem";
 
-export default function Home() {
+export default function Home({navigation}) {
   const [goals, setGoals] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const makeModalVisible = () => {
@@ -41,6 +32,12 @@ export default function Home() {
     );
     console.log(goals);
   }
+
+  function itemPressed(goal) {
+    console.log("item pressed");
+    navigation.navigate('Details', {goalObject:goal});
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -52,7 +49,13 @@ export default function Home() {
           data={goals}
           renderItem={({ item }) => {
             console.log(item);
-            return <GoalItem goal={item} onDelete={onDelete} />;
+            return (
+              <GoalItem
+                goal={item}
+                onDelete={onDelete}
+                onItemPress={itemPressed}
+              />
+            );
           }}
           contentContainerStyle={styles.scrollViewItems}
         ></FlatList>
